@@ -1,0 +1,23 @@
+{
+  "name": "backend_restful_express_sql_mongodb",
+  "version": "1.0.0",
+  "description": "backend_restful_express_sql_mongodb",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thienphu2003/Backend_RESTFul_Server_Node.JS_Express_-SQL-MongoDB-.git"
+  },
+  "author": "Phu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thienphu2003/Backend_RESTFul_Server_Node.JS_Express_-SQL-MongoDB-/issues"
+  },
+  "homepage": "https://github.com/thienphu2003/Backend_RESTFul_Server_Node.JS_Express_-SQL-MongoDB-#readme",
+  "dependencies": {
+    "express": "4.21.0"
+  }
+}
