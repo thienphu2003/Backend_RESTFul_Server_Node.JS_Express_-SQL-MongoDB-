@@ -1,17 +1,16 @@
-const express = require("express");
-const path = require("path");
-// import express from "express";
-const app = express();
 require("dotenv").config();
-const port = process.env.PORT || 3001;
+const express = require("express");
+const app = express();
+const configViewEngine = require("./config/viewEngine");
+const webRouters = require("./routes/web");
+const testDbRoute = require("./routes/test_db_connection");
 
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname, "public")));
-app.get("/", (req, res) => {
-  console.log("Enter /");
-  res.render("sample.ejs");
-});
+const port = process.env.PORT || 3001;
+configViewEngine(app);
+// Middleware to parse URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
+app.use("/", webRouters);
+app.use("/test_db", testDbRoute);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
