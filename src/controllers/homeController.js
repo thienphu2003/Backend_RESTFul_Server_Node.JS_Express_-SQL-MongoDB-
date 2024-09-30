@@ -1,5 +1,11 @@
 const connection = require("../config/database");
-const { getAllUsers, getUserById } = require("../services/crudService");
+const {
+  getAllUsers,
+  getUserById,
+  updateUserById,
+  deleteUserById,
+  createUser,
+} = require("../services/crudService");
 
 const getHomePage = async (req, res) => {
   const results = await getAllUsers();
@@ -13,31 +19,30 @@ const getCreatePage = (req, res) => {
 const getUpdatePage = async (req, res) => {
   const id = req.params.id;
   const results = await getUserById(id);
-  res.render("edit.ejs", { user: results[0] });
+  res.render("edit.ejs", { user: results });
 };
 
 const postCreateUser = async (req, res) => {
   const { name, email, city } = req.body;
+  await createUser(name, email, city);
+  res.redirect("/");
+};
 
-  const [results, fields] = await connection.query(
-    `INSERT INTO Users (name, email, city) VALUES (?, ?, ?)`,
-    [name, email, city]
-  );
-  console.log("🚀 ~ postCreateUser ~ results:", results);
-  res.send("Save user success");
-  //   [name, email, city],)
-  // connection.query(
-  //   `INSERT INTO Users (name, email, city) VALUES (?, ?, ?)`,
-  //   [name, email, city],
-  //   function (err, results) {
-  //     if (err) {
-  //       console.error("Error inserting data: ", err);
-  //       return res.status(500).send("Error saving user");
-  //     }
-  //     console.log(results);
-  //     res.send("Save user success");
-  //   }
-  // );
+const postUpdateUser = async (req, res) => {
+  const { name, email, city, id } = req.body;
+  await updateUserById(id, name, email, city);
+  res.redirect("/");
+};
+
+const getDeletePage = async (req, res) => {
+  const id = req.params.id;
+  const results = await getUserById(id);
+  res.render("delete.ejs", { user: results });
+};
+
+const postDeleteUser = async (req, res) => {
+  await deleteUserById(req.body.id);
+  res.redirect("/");
 };
 
 module.exports = {
@@ -45,4 +50,7 @@ module.exports = {
   postCreateUser,
   getCreatePage,
   getUpdatePage,
+  postUpdateUser,
+  postDeleteUser,
+  getDeletePage,
 };

@@ -29,10 +29,14 @@
           <td><%= user.name %></td>
           <td><%= user.city %></td>
           <td>
-            <button>
-              <a href="/update/<%= user.id%>">Edit</a>
-            </button>
-            <button>Delete</button>
+            <div class="flex">
+              <button>
+                <a href="/update/<%= user.id%>">Edit</a>
+              </button>
+              <form action="/delete_user/<%= user.id %>" , method="POST">
+                <button>Delete</button>
+              </form>
+            </div>
           </td>
         </tr>
         <% }) %>
