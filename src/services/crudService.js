@@ -1,4 +1,5 @@
 const connection = require("../config/database");
+const User = require("../models/user");
 
 const getAllUsers = async () => {
   const [results, fields] = await connection.query("SELECT * FROM Users");
@@ -15,10 +16,12 @@ const getUserById = async (id) => {
 };
 
 const createUser = async (name, email, city) => {
-  const [results, fields] = await connection.query(
-    `INSERT INTO Users (name, email, city) VALUES (?, ?, ?)`,
-    [name, email, city]
-  );
+  const results = await User.create({
+    email,
+    name,
+    city,
+  });
+  console.log(results);
   return results;
 };
 

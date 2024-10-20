@@ -8,7 +8,7 @@ const {
 } = require("../services/crudService");
 
 const getHomePage = async (req, res) => {
-  const results = await getAllUsers();
+  const results = [];
   return res.render("home.ejs", { users: results });
 };
 
