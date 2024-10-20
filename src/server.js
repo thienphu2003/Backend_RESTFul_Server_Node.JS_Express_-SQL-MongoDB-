@@ -5,6 +5,7 @@ const configViewEngine = require("./config/viewEngine");
 const webRouters = require("./routes/web");
 const testDbRoute = require("./routes/test_db_connection");
 const connection = require("./config/database");
+const mongoose = require("mongoose");
 
 const port = process.env.PORT || 3001;
 configViewEngine(app);
@@ -13,8 +14,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", webRouters);
 app.use("/test_db", testDbRoute);
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+const kittySchema = new mongoose.Schema({
+  name: String,
 });
-
-connection();
+const Kitten = mongoose.model("Kitten", kittySchema);
+const silence = new Kitten({ name: "Silence" });
+(async () => {
+  try {
+    await connection();
+    await silence.save();
+    app.listen(port, () => {
+      console.log(`Example app listening on port ${port}`);
+    });
+  } catch (error) {
+    console.log("Error", error);
+  }
+})();
