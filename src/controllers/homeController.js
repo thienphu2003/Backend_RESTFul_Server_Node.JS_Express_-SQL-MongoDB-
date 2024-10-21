@@ -8,7 +8,7 @@ const {
 } = require("../services/crudService");
 
 const getHomePage = async (req, res) => {
-  const results = [];
+  const results = await getAllUsers();
   return res.render("home.ejs", { users: results });
 };
 
@@ -19,6 +19,7 @@ const getCreatePage = (req, res) => {
 const getUpdatePage = async (req, res) => {
   const id = req.params.id;
   const results = await getUserById(id);
+  console.log("🚀 ~ getUpdatePage ~ results:", results);
   res.render("edit.ejs", { user: results });
 };
 
