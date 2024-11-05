@@ -1,4 +1,30 @@
 const { getAllUsers, getUserById, updateUserById, deleteUserById, createUser } = require('../services/crudService');
+const { uploadFile, uploadMultipleFiles } = require('../services/fileService');
+
+const uploadFileAPI = async (req, res) => {
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
+    const result = await uploadFile(req.files.sampleFile);
+    console.log('🚀 ~ uploadFileAPI ~ result:', result);
+    res.send(result);
+};
+
+const uploadMultipleFilesAPI = async (req, res) => {
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
+    console.log(req.files);
+    if (Array.isArray(req.files.file)) {
+        const result = await uploadMultipleFiles(req.files.file);
+        return res.status(200).json({
+            EC: 0,
+            data: result,
+        });
+    } else {
+        return await this.uploadFileAPI(req, res);
+    }
+};
 
 const getUsersAPI = async (req, res) => {
     const results = await getAllUsers();
@@ -40,4 +66,6 @@ module.exports = {
     postUsersAPI,
     updateUsersAPI,
     deleteUsersAPI,
+    uploadFileAPI,
+    uploadMultipleFilesAPI,
 };

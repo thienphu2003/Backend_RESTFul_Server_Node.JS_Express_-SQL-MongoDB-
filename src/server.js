@@ -6,12 +6,14 @@ const webRouters = require('./routes/web');
 const apiRouters = require('./routes/api');
 const testDbRoute = require('./routes/test_db_connection');
 const connection = require('./config/database');
+const fileUpload = require('express-fileupload');
 
 const port = process.env.PORT || 3001;
 configViewEngine(app);
 // Middleware to parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(fileUpload());
 app.use('/', webRouters);
 app.use('/api/v1', apiRouters);
 app.use('/test_db', testDbRoute);
