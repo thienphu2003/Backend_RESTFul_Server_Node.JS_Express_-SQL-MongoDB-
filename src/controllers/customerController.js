@@ -54,7 +54,7 @@ module.exports = {
         let result;
         const { limit, page } = req.query;
         if (limit && page) {
-            result = await getListCustomer(limit, page);
+            result = await getListCustomer(limit, page, req.query);
         } else {
             result = await getListCustomer();
         }

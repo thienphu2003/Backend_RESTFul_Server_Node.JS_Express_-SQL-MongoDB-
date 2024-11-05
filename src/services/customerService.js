@@ -1,6 +1,6 @@
 const e = require('express');
 const Customer = require('../models/customer');
-
+const aqp = require('api-query-params');
 const createCustomer = async (body) => {
     try {
         const result = await Customer.create(body);
@@ -21,13 +21,15 @@ const createManyCustomer = async (body) => {
     }
 };
 
-const getListCustomer = async (limit, page) => {
+const getListCustomer = async (limit, page, queryString) => {
     try {
         let customers;
         if (limit && page) {
             const offset = (page - 1) * limit;
-            console.log('🚀 ~ getListCustomer ~ offset:', offset);
-            customers = await Customer.find().skip(offset).limit(limit).exec();
+            const { filter } = aqp(queryString);
+            delete filter.page;
+            console.log('🚀 ~ getListCustomer ~ filter:', filter);
+            customers = await Customer.find(filter).skip(offset).limit(limit).exec();
         } else {
             customers = await Customer.find();
         }

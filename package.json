@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/thienphu2003/Backend_RESTFul_Server_Node.JS_Express_-SQL-MongoDB-#readme",
   "dependencies": {
+    "api-query-params": "^5.4.0",
     "backend_restful_express_sql_mongodb": "file:",
     "body-parser": "^1.20.3",
     "dotenv": "16.4.5",
